@@ -56,7 +56,7 @@ class TestRutenett {
                 
 	System.out.println("testHentCelle(): Alt riktig!");
     }
-/*
+
     private static void testTegnRutenett () {
 	Rutenett testRutenett = new Rutenett(4, 4);
 	testRutenett.fyllMedTilfeldigeCeller();
@@ -65,7 +65,7 @@ class TestRutenett {
 	System.out.println("testTegnRutenett(): Utskrift ferdig!");
 	System.out.println("  Naa kan du selv sjekke om den ser riktig ut.");
     }
-
+/*
     private static void testSettNaboer () {
 	Rutenett testRutenett = new Rutenett(3, 3);
 	testRutenett.fyllMedTilfeldigeCeller();
@@ -139,7 +139,7 @@ class TestRutenett {
 	testKonstruktoerUtenRutenett();
 	testFyllMedTilfeldigeCeller();
 	testHentCelle();
-	// testTegnRutenett();
+	testTegnRutenett();
 	// testSettNaboer();
 	// testKobleAlleCeller();
 	// testAntallLevende();
