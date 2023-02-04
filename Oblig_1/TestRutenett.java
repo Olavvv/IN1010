@@ -126,7 +126,6 @@ class TestRutenett {
 	testRutenett.hentCelle(0,0).settLevende();
 	testRutenett.hentCelle(2,1).settLevende();
 	testRutenett.hentCelle(0,2).settLevende();
-	int antallLevende = testRutenett.antallLevende();
 	sjekk("antallLevende(): antall levende skal være 3",
 	      testRutenett.antallLevende()==3);
     
