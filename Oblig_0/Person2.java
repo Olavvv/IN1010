@@ -1,7 +1,7 @@
-public class Person {
-    private Bil3 personensBil;
+public class Person2 {
+    Bil3 personensBil;
 
-    public Person(Bil3 bilObjekt) {
+    public Person2(Bil3 bilObjekt) {
         personensBil = bilObjekt;
     }
 

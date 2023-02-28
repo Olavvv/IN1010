@@ -1,7 +1,7 @@
 public abstract class Legemiddel {
     // Deklarering av variabler.
     public final String navn;
-    int pris;
+    public int pris;
     public final double virkestoff;    
 
     protected Legemiddel(String navn, int pris, double virkestoff) {

@@ -11,7 +11,7 @@ public class Vanedannende extends Legemiddel {
         idNr++;
     }
 
-
+    @Override
     public String toString() {
         return super.toString() + " Styrke: " + styrke + " Id: " + id;
     }

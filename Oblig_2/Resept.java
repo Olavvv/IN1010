@@ -12,8 +12,8 @@ public abstract class Resept {
     }
 
     public String toString() {
-        return "Legemiddel: " + legemiddel + " Utskrivende lege: " + utskrivendeLege + 
-            " Pasient ID: " + pasientId + " Reit: " + reit;
+        return " Legemiddel: " + legemiddel + ". Utskrivende lege: " + utskrivendeLege + 
+            ". Pasient ID: " + pasientId + ". Reit: " + reit;
     }
 
     // Henter ID til legemiddeled referert i resept objektet.

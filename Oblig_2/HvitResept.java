@@ -1,10 +1,16 @@
 public class HvitResept extends Resept {
+
+    // En variabel vi kan endre uten aa endre legemiddel objektet sin pris
+    int prisAaBetale; 
+
     public HvitResept(Legemiddel legemiddel, Lege utskrivendeLege, int pasientId, int reit) {
         super(legemiddel, utskrivendeLege, pasientId, reit);
+        prisAaBetale = legemiddel.pris;
     }
 
-    public toString() {
-
+    @Override
+    public String toString() {
+        return "Type: Hvit" + ". Pris aa Betale: " + prisAaBetale + super.toString();
     }
 
     public String farge() {
@@ -12,7 +18,7 @@ public class HvitResept extends Resept {
     }
 
     public int prisAaBetale() {
-        return legemiddel.pris;
+        return prisAaBetale;
     }
     
 }

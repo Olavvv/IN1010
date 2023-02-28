@@ -10,6 +10,7 @@ public class Vanlig extends Legemiddel {
         idNr++;
     }
 
+    @Override
     public String toString() {
         return super.toString() +" Id: " + id;
     }
