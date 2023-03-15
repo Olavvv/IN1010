@@ -17,15 +17,22 @@ public class TestResepter {
         BlaaResept blaa = new BlaaResept(nark1, leg, 0, 1);
         BlaaResept blaa2 = new BlaaResept(nark2, leg, 0, 3);
 
+
+        // Tester om id-ene fungerer.
+        test("Id for objekt stemmer ", mil.id == 0);
+        test("Id for objekt stemmer ", presept.id == 1);
+        test("Id for objekt stemmer ", blaa.id == 2);
+        test("Id for objekt stemmer ", blaa2.id == 3);
+
         // Tester om prisene er riktig.
         test("Riktig pris på militærresept",mil.prisAaBetale() == 0);
         test("Riktig pris på p-resept", presept.prisAaBetale() == (1000-108));
         test("Riktig pris på blaaresept", blaa.prisAaBetale() == 375);
 
-        test("Metode returnId fungerer", mil.returnId() == 0);
-        test("Metode returnId fungerer", presept.returnId() == 0);
+        test("Metode returnId fungerer", mil.returnId() == 2);
+        test("Metode returnId fungerer", presept.returnId() == 1);
         test("Metode returnId fungerer", blaa.returnId() == 0);
-        test("Metode returnId fungerer", blaa2.returnId() == 1);
+        test("Metode returnId fungerer", blaa2.returnId() == 3);
 
         //Sjekker reit på alle objektene, så bruker jeg objektene og sjekker reit igjen.
         test("riktig reit", mil.hentReit() == 3);

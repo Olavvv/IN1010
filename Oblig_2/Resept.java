@@ -4,11 +4,17 @@ public abstract class Resept {
     int pasientId;
     int reit;
 
+    public final int id;
+    public static int idNr = 0;
+
     public Resept(Legemiddel legemiddel, Lege utskrivendeLege, int pasientId, int reit) {
         this.legemiddel = legemiddel;
         this.utskrivendeLege = utskrivendeLege;
         this.pasientId = pasientId;
         this.reit = reit;
+
+        id = idNr;
+        idNr++;
     }
 
     public String toString() {
