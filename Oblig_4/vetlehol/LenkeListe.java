@@ -21,17 +21,15 @@ abstract class LenkeListe<E> implements Liste<E> {
         // Flytter peker én fram.
         @Override
         public E next() {
+            E returnData = peker.data;
             peker = peker.neste;
-            return peker.data;
+            return returnData;
         }
 
         @Override
         public boolean hasNext() {
             // Listen har neste om neste node ikke har null som data.
-            if (peker.neste.data != null) {
-                return true;
-            }
-            return false;
+            return peker.neste != null;
         }
     }
     // Setter start-noden til 'null'.
