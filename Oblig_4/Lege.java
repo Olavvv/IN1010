@@ -8,19 +8,16 @@ public class Lege implements Comparable<Lege> {
         return navn.split(". ")[1].compareTo(lege.navn.split(". ")[1]);
     }
 
-    public Resept skrivResept(Legemiddel legemiddel, Pasient pasient, int reit) throws UlovligUtskrift {
-        if (legemiddel instanceof Narkotisk && !(this instanceof Spesialist)) {
-            throw new UlovligUtskrift(this, legemiddel);
-        }
-        else {
-            Resept nyResept = new HvitResept(legemiddel, this, pasient, reit);
-            utskrevneResepter.leggTil(new HvitResept(legemiddel, this, pasient, reit));
-            return nyResept;
-        }
+    public Resept skrivResept(Legemiddel legemiddel, Pasient pasient, int reit) { //throws UlovligUtskrift {
+        Resept nyResept = new HvitResept(legemiddel, this, pasient, reit);
+        utskrevneResepter.leggTil(nyResept);
+        
+        return nyResept;
     }
 
     public Lege(String navn) {
         this.navn = navn;
+        utskrevneResepter = new IndeksertListe<Resept>();
     }
 
     public String toString() {

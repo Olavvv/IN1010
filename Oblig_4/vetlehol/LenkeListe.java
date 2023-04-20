@@ -29,7 +29,7 @@ abstract class LenkeListe<E> implements Liste<E> {
         @Override
         public boolean hasNext() {
             // Listen har neste om neste node ikke har null som data.
-            return peker.neste != null;
+            return peker != null;
         }
     }
     // Setter start-noden til 'null'.

@@ -69,12 +69,10 @@ public class Legesystem {
             if (line.contains("#")) {
                 status++;
                 line = scan.nextLine();
-                System.out.println("Ny seksjon");
             }
 
             if (status == 1) {
                 pasienter.leggTil(new Pasient(line.split(",")[0], line.split(",")[1]));
-                line = scan.nextLine();
             }
             else if (status == 2) {
                 String navn = line.split(",")[0];
@@ -84,23 +82,23 @@ public class Legesystem {
 
 
 
-                if (type == "narkotisk") {
+                if (type.equals("narkotisk")) {
                     int styrke = Integer.parseInt(line.split(",")[4]);
                     legemidler.leggTil(new Narkotisk(navn, pris, virkestoff, styrke));
                 }
-                else if (type == "vanedannende") {
+                else if (type.equals("vanedannende")) {
                     int styrke = Integer.parseInt(line.split(",")[4]);
                     legemidler.leggTil(new Vanedannende(navn, pris, virkestoff, styrke));
                 }
-                else if (type == "vanlig") {
+                else if (type.equals("vanlig")) {
                     legemidler.leggTil(new Vanlig(navn, pris, virkestoff));
                 }
             }
             else if (status == 3) {
                 String navn = line.split(",")[0];
-                String kontrollId = line.split(",")[0];
+                String kontrollId = line.split(",")[1];
 
-                if (kontrollId == "0") {
+                if (kontrollId.equals("0")) {
                     leger.leggTil(new Lege(navn));
                 }
                 else {
@@ -123,38 +121,49 @@ public class Legesystem {
                 }
                 if (pasient == null) {
                     System.out.println("Pasienten med id nummer: " +  pasientId + " finnes ikke.");
+                    return;
                 }
 
                 for (Lege leg : leger) {
-                    if (legeNavn == leg.navn) {
+                    if (legeNavn.equals(leg.navn)) {
                         lege = leg;
                     }
                 }
                 if (lege == null) {
                     System.out.println("Legen med navn: " +  legeNavn + " finnes ikke.");
+                    return;
                 }
 
 
-                if (type == "hvit") {
+                if (type.equals("hvit")) {
                     int reit = Integer.parseInt(line.split(",")[4]);
                     Resept resept = lege.skrivResept(legemiddel, pasient, reit);
+                    pasient.resepter.leggTil(resept);
                     resepter.leggTil(resept);
                 }
-                else if (type == "blaa") {
-                    int reit = Integer.parseInt(line.split(",")[4]);
-                    Resept resept = new BlaaResept(legemiddel, lege, pasient, reit);
-                    lege.utskrevneResepter.leggTil(resept);
-                    resepter.leggTil(resept);
+                else if (type.equals("blaa")) {
+                    if (lege instanceof Spesialist) {
+                        int reit = Integer.parseInt(line.split(",")[4]);
+                        Resept resept = new BlaaResept(legemiddel, lege, pasient, reit);
+                        lege.utskrevneResepter.leggTil(resept);
+                        pasient.resepter.leggTil(resept);
+                        resepter.leggTil(resept);
+                    }
+                    else {
+                        System.out.println("Blå resept må bli skrevet av spesialist.");
+                    }
                 }
-                else if (type == "militaer") {
+                else if (type.equals("militaer")) {
                     Resept resept = new MilResept(legemiddel, lege, pasient);
                     lege.utskrevneResepter.leggTil(resept);
+                    pasient.resepter.leggTil(resept);
                     resepter.leggTil(resept);
                 }
-                else if (type == "p") {
+                else if (type.equals("p")) {
                     int reit = Integer.parseInt(line.split(",")[4]);
                     Resept resept = new PResept(legemiddel, lege, pasient, reit);
                     lege.utskrevneResepter.leggTil(resept);
+                    pasient.resepter.leggTil(resept);
                     resepter.leggTil(resept);
                 }
 
@@ -174,6 +183,9 @@ public class Legesystem {
                 
                 if (pasient.resepter.stoerrelse() == 0) {
                     System.out.println("Pasient har ingen resepter.");
+                }
+                else {
+                    System.out.println(pasient.resepter);
                 }
             }
         }
@@ -229,8 +241,18 @@ public class Legesystem {
 
     public void leggTilLege() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Hva heter legen? (paa formen: Dr. [navn])");
-        leger.leggTil(new Lege(input.nextLine()));
+        System.out.println("Er legen en Spesialist? [Y/N]");
+
+        if (input.nextLine().strip().toLowerCase().equals("y")) {
+            System.out.println("Hva heter legen? (paa formen: Dr. [navn])");
+            String navn = input.nextLine();
+            System.out.println("Hva er kontrollId-en til Spesialisten?");
+            leger.leggTil(new Spesialist(navn, input.nextLine()));
+        }
+        else {
+            System.out.println("Hva heter legen? (paa formen: Dr. [navn])");
+            leger.leggTil(new Lege(input.nextLine()));
+        }
     }
 
     public void leggTilPasient() {
@@ -250,6 +272,7 @@ public class Legesystem {
         System.out.println("#3: Narkotisk ");
         Scanner input = new Scanner(System.in);
         int valg = input.nextInt();
+        input.nextLine();
 
         String navn;
         int pris;
@@ -317,6 +340,7 @@ public class Legesystem {
         }
 
         pasId = input.nextInt();
+        input.nextLine();
         for (Pasient pas : pasienter) {
             if (pas.id == pasId) {
                 pasient = pas;
@@ -330,10 +354,11 @@ public class Legesystem {
 
         legNavn = input.nextLine();
         for (Lege leg : leger) {
-            if (leg.navn == legNavn) {
+            if (legNavn.equals(leg.navn)) {
                 lege = leg;
             }
         }
+
         System.out.println("Hvilken legemiddel skal gis resept til? (Oppgi navn)");
         for (Legemiddel legm : legemidler) {
             System.out.println(legm.toString());
@@ -341,10 +366,11 @@ public class Legesystem {
 
         legmNavn = input.nextLine();
         for (Legemiddel legm : legemidler) {
-            if (legm.navn == legmNavn) {
+            if (legmNavn.equals(legm.navn)) {
                 legemiddel = legm;
             }
         }
+
         if (pasient == null) {
             System.out.println("Pasienten finnes ikke.");
             return;
@@ -355,6 +381,7 @@ public class Legesystem {
         }
         if (legemiddel == null) {
             System.out.println("Legemiddelet finnes ikke.");
+            return;
         }
 
         System.out.println("Hvor mange ganger kan resepten bli brukt?");
@@ -362,14 +389,11 @@ public class Legesystem {
 
         System.out.println("Oppretter resept...");
 
-        try {
-            Resept resept = lege.skrivResept(legemiddel, pasient, reit);
-            pasient.resepter.leggTil(resept);
-            resepter.leggTil(resept);
-        } finally {
-            System.out.println("Resept er blitt opprettet");
-        }
-    }
+        Resept resept = lege.skrivResept(legemiddel, pasient, reit);
+        pasient.resepter.leggTil(resept);
+        resepter.leggTil(resept);
+        
+        }       
 
     public void brukResept() {
         Pasient pasient = null;
@@ -388,6 +412,7 @@ public class Legesystem {
         }
 
         pasId = input.nextInt();
+        input.nextLine();
         for (Pasient pas : pasienter) {
             if (pas.id == pasId) {
                 pasient = pas;
@@ -399,13 +424,14 @@ public class Legesystem {
             return;
         }
 
+        System.out.println("Hvilken resept oensker du aa bruke? (Skriv inn legemiddel navn)");
         for (Resept res : pasient.resepter) {
             System.out.println(res.toString());
         }
 
         reseptNavn = input.nextLine();
         for (Resept res : pasient.resepter) {
-            if (res.legemiddel.navn == reseptNavn) {
+            if (res.legemiddel.navn.equals(reseptNavn)) {
                 resept = res;
             }
         }

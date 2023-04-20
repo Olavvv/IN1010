@@ -1,7 +1,7 @@
 public class Pasient {
     String navn;
     String foedselsnummer;
-    IndeksertListe<Resept> resepter = new IndeksertListe<Resept>();
+    IndeksertListe<Resept> resepter;
 
     static int idNr = 0;
     int id;
@@ -9,6 +9,7 @@ public class Pasient {
     public Pasient(String navn, String foedselsnummer) {
         this.navn = navn;
         this.foedselsnummer = foedselsnummer;
+        resepter = new IndeksertListe<Resept>();
 
         id = idNr;
         idNr++;
