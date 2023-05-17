@@ -1,0 +1,13 @@
+a)
+Instance of kan bli brukt for å teste nedover i arv, ikke oppover.
+b)
+Ja dette er trygt.
+MEN: Hvis du konverterer en referanse til en subklasse til en referanse 
+til superklassen vil man miste eventuelle egenskaper som er unike for subklassen.
+c)
+Dette er ikke alltid trygt, dette er fordi subklassen kan ha andre egenskaper
+enn det superklassen har.
+d)
+Vi kan bruke komposisjon istedet for arv, arv fungerer mindre bra når 
+vi vil at en klasse bare skal arve noen få metoder, eller når vi vil arve
+fra flere klasser, noe som Java ikke har innebygd støtte for.

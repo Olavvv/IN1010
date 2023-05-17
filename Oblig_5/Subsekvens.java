@@ -1,9 +1,13 @@
 public class Subsekvens {
     private int antall;
-    
+    public final String subsekvens;
     public Subsekvens(int antall, String sekvens) {
         this.antall = antall;
-        final String subsekvens = sekvens;
+        subsekvens = sekvens;
+    }
+
+    public String toString() {
+        return " ("+ subsekvens + ","+antall+") ";
     }
 
     public int hentAntall() {
@@ -14,5 +18,4 @@ public class Subsekvens {
         antall = nyAntall;
     }
 
-    //Husk tostring metode.
 }
