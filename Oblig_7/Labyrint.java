@@ -12,6 +12,7 @@ public class Labyrint {
         String line;
         int radTeller = 0;
 
+        // Dersom filtypen er feil, vil ikke programmet kjøres.
         if (!filnavn.contains(".in")) {
             System.out.println("Filen er av feil filformat, må være .in");
             System.exit(0);
@@ -23,22 +24,26 @@ public class Labyrint {
             line = sc.nextLine();
             rader = Integer.parseInt(line.split(" ")[0]);
             kolonner = Integer.parseInt(line.split(" ")[1]);
-            System.out.println(rader + " " + kolonner);
 
             ruter = new Rute[rader][kolonner];
 
+            // Løper gjennom filen, og lager ruter.
             while (sc.hasNext()) {
                 line = sc.nextLine();
-                System.out.println(line);
 
                 for (int i = 0; i < kolonner; i++) {
                     if (line.charAt(i) == '.') {
-                        System.out.println(i + " " + radTeller);
-                        ruter[radTeller][i] = new HvitRute();
+                        // Sjekker om den hvite ruten er på kanten av labyrinten.
+                        // Om den er, så er det en åpning.
+                        if (i == kolonner - 1 || i == 0 || radTeller == rader - 1 || radTeller == 0) {
+                            ruter[radTeller][i] = new Aapning(radTeller, i);
+                        }
+                        else {
+                            ruter[radTeller][i] = new HvitRute(radTeller, i);  
+                        }
                     }
                     else if (line.charAt(i) == '#') {
-                        System.out.println(i + " " + radTeller);
-                        ruter[radTeller][i] = new SvartRute();
+                        ruter[radTeller][i] = new SvartRute(radTeller, i);
                     }
                 }
                 radTeller++;
@@ -52,6 +57,7 @@ public class Labyrint {
 
         System.out.println(this);
 
+        // Kobler ruter sammen (nord, syd, øst, vest).
         kobleRuter();
     }
 
@@ -61,7 +67,7 @@ public class Labyrint {
 
         for (int rad = 0; rad < rader; rad++) {
             for (int kol = 0; kol < kolonner; kol++) {
-                output += ruter[rad][kol].toString();
+                output += " " + ruter[rad][kol].toString() + " ";
             }
             output += "\n";
         }
@@ -86,5 +92,10 @@ public class Labyrint {
                 
             }
         }
+    }
+
+    // Starter finn-kallingen på start ruten.
+    public void finnUtveiFra(int rad, int kol) {
+        ruter[rad][kol].finn(null);
     }
 }
